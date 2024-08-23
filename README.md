@@ -22,8 +22,8 @@ Ampiy Crypto App is a mobile application designed to provide real-time updates o
 ### Clone the repository:
 
 ```bash
-git clone https://github.com/your_username/Ampiy_Crypto_App.git
-cd Ampiy_Crypto_App
+git clone https://github.com/Dipanshu22/Ampiy_Crypto_App.git
+cd Ampiy
 ```
 
 ## Install Flutter dependencies:
