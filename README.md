@@ -2,6 +2,15 @@
 
 Ampiy Crypto App is a mobile application designed to provide real-time updates on cryptocurrency prices, market trends, and investment opportunities. The app offers a user-friendly interface with features like hot coin tracking, market variation spectrum, and detailed views of individual cryptocurrencies.
 
+### Home Page Screenshot
+![Home Page Screenshot](https://github.com/user-attachments/assets/c8681e7e-d24e-48c0-a05c-2d5e856b0e5f)![image](https://github.com/user-attachments/assets/1b1d0fad-ce41-43ac-8738-2f9df3190af4)
+
+### Coins Screen 
+![image](https://github.com/user-attachments/assets/375d98e2-3e00-4149-a158-a5b26e5099d0)
+
+
+
+
 ## Features
 
 - **Real-Time Cryptocurrency Prices:** Stay updated with the latest cryptocurrency prices.
