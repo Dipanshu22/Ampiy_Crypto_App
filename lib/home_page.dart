@@ -5,6 +5,7 @@ import 'package:web_socket_channel/status.dart' as status;
 import 'dart:convert';
 import 'coins_page.dart';
 
+// Map linking cryptocurrency symbols to their respective image assets
 final Map<String, String> cryptoImageMap = {
   'BTC': 'lib/assets/Bitcoin.png',
   'ETH': 'lib/assets/Ethereum.jpg',
@@ -57,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
     connectWebSocket();
   }
 
+  // Method to connect to the WebSocket for real-time cryptocurrency data
   void connectWebSocket() {
     channel = WebSocketChannel.connect(
       Uri.parse('ws://prereg.ex.api.ampiy.com/prices'),
@@ -68,13 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
       "cid": 1
     }));
 
+    // Listen for WebSocket stream data
     channel.stream.listen(
       (data) {
         final decodedData = jsonDecode(data);
         setState(() {
           tickerData = (decodedData['data'] as List<dynamic>)
               .where((ticker) => cryptoImageMap.containsKey(ticker['s'].split('INR').first))
-              .toList();
+              .toList(); // Filter the data to include only symbols in the cryptoImageMap
         });
       },
       onError: (error) {
@@ -88,15 +91,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    channel.sink.close(status.goingAway);
+    channel.sink.close(status.goingAway); // Close WebSocket connection
     super.dispose();
   }
 
+  // Method to handle navigation based on the selected index in the bottom navigation bar
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
 
+    // Navigate to the CoinsPage if the "Coins" tab is selected
     if (index == 1) {
       Navigator.push(
         context,
@@ -104,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context) =>
                 CoinsPage(tickerData: tickerData, cryptoImageMap: cryptoImageMap, onReturn: () {
                   setState(() {
-                    _selectedIndex = 0;
+                    _selectedIndex = 0; // Return to Home tab after navigating back
                   });
                 })),
       );
@@ -132,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Row of buttons for different actions
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -142,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               const SizedBox(height: 16),
-              _buildBanner(context),
+              _buildBanner(context), // Display banner with SIP information
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -177,6 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 16),
 
+              // Display top 10 cryptocurrencies
               tickerData.isNotEmpty
                   ? Column(
                       children: tickerData.take(10).map((ticker) {
@@ -219,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const SizedBox(height: 16),
-              _buildMarketVariationSpectrum(),
+              _buildMarketVariationSpectrum(), // Display market variation spectrum
               const SizedBox(height: 16),
 
               // Hot Coins Section
@@ -253,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 16),
 
-              // Zones
+              // Zones Section
               Text(
                 'Zones',
                 style: TextStyle(
@@ -317,6 +324,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build top buttons (Buy, Sell, Referral, Tutorial)
   Widget _buildTopButton(IconData icon, String label, Color color) {
     return Column(
       children: [
@@ -334,6 +342,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build the banner with SIP information
   Widget _buildBanner(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -386,6 +395,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build feature cards (SIP Calculator, Deposit INR)
   Widget _buildFeatureCard({
     required BuildContext context,
     required IconData icon,
@@ -427,6 +437,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build coin cards for the Coins section
   Widget _buildCoinCard(String name, String price, String changeValue, String changePercent, bool isPositive) {
     String symbol = name.split('INR').first;
 
@@ -497,6 +508,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build hot coin cards for the Hot Coins section
   Widget _buildHotCoinCard(String name, String price, String changeValue, bool isPositive) {
     String symbol = name.split('INR').first;
 
@@ -546,6 +558,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build zone cards in the Zones section
   Widget _buildZoneCard(String name, String coins, String change, Color color) {
     return Container(
       margin: const EdgeInsets.all(4.0),
@@ -590,6 +603,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build the market variation spectrum
   Widget _buildMarketVariationSpectrum() {
     return Column(
       children: [
@@ -636,6 +650,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Helper method to build individual bars in the market variation spectrum
   Widget _buildBar(int heightFactor, Color color) {
     return Container(
       height: (heightFactor * 2).toDouble(),

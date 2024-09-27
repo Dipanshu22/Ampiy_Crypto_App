@@ -13,13 +13,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ampiy App Redesign',
       theme: ThemeData(
+        brightness: Brightness.light, // Light theme
+        primaryColor: Colors.deepPurple, // Primary accent color
+        useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Colors.black), // Default text color for light mode
+        ),
+      ),
+      darkTheme: ThemeData(
         brightness: Brightness.dark, // Dark theme
         primaryColor: Colors.deepPurple, // Primary accent color
         useMaterial3: true,
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Colors.white), // Default text color
+          bodyMedium: TextStyle(color: Colors.white), // Default text color for dark mode
         ),
       ),
+      themeMode: ThemeMode.dark, // Set default to dark mode
       home: const MyHomePage(),
     );
   }
